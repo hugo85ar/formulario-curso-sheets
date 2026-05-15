@@ -1,181 +1,88 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <base target="_top">
-
   <title>Registro Curso Gratis - Hugo Alvigini</title>
-
   
-
   <script>
-
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
-
     
-
-    // REEMPLAZA ESTE ID CON EL TUYO REAL DE META
-
-    fbq('init', 'TU_ID_DE_PIXEL_AQUÍ'); 
-
+    // ID ACTUALIZADO
+    fbq('init', '2189151328193841'); 
     fbq('track', 'PageView');
-
   </script>
-
   
-
   <style>
-
     :root { --primary: #1e3c72; --success: #5cb85c; --text: #64748b; }
-
     body { font-family: 'Open Sans', sans-serif; background-color: #f4f7f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-
     .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-
     .logo { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 20px; object-fit: cover; }
-
     h2 { color: var(--primary); margin-bottom: 10px; font-size: 22px; }
-
     p { color: var(--text); margin-bottom: 25px; font-size: 14px; line-height: 1.5; }
-
     input { width: 100%; padding: 12px 15px; margin: 8px 0; border: 1px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; font-size: 16px; outline: none; transition: 0.3s; }
-
     input:focus { border-color: var(--primary); box-shadow: 0 0 5px rgba(30,60,114,0.2); }
-
     button { width: 100%; background: var(--success); color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 15px; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
-
     button:hover { background: #4cae4c; transform: translateY(-2px); }
-
     button:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; }
-
     #mensaje { display: none; color: #059669; font-weight: bold; margin-top: 20px; background: #ecfdf5; padding: 15px; border-radius: 10px; border: 1px solid #a7f3d0; }
-
   </style>
-
 </head>
-
 <body>
 
-
-
   <div class="card">
-
     <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" class="logo" alt="Hugo Alvigini">
-
     
-
-    <h2>🚀 ¡Empezá Ahora!</h2>
-
+    <h2>🚀 ¡Hacé tus procesos inteligentes!</h2>
     <p>Completá tus datos y recibí acceso inmediato al curso gratuito de Google Sheets.</p>
-
     
-
     <form id="regForm">
-
       <input type="text" name="nombre" placeholder="Tu Nombre" required>
-
       <input type="text" name="apellido" placeholder="Tu Apellido" required>
-
       <input type="email" name="email" placeholder="Tu mejor Email" required>
-
       <input type="text" name="pais" placeholder="Tu País" required>
-
       <button type="submit" id="btnEnvio">SOLICITAR ACCESO GRATIS</button>
-
     </form>
-
     
-
     <div id="mensaje">
-
       ✨ ¡Genial! Registro exitoso.<br>
-
-      <small style="font-weight: normal;">Revisá tu email (y carpeta de Spam) en unos minutos para tus credenciales.</small>
-
+      <small style="font-weight: normal;">Revisá tu email en unos minutos para tus credenciales.</small>
     </div>
-
   </div>
 
-
-
   <script>
-
     document.getElementById('regForm').onsubmit = function(e) {
-
       e.preventDefault();
-
       const btn = document.getElementById('btnEnvio');
-
-      
-
-      // Evitar doble click
-
       btn.disabled = true;
-
       btn.innerText = 'PROCESANDO...';
 
-
-
       const datos = {
-
         nombre: this.nombre.value,
-
         apellido: this.apellido.value,
-
         email: this.email.value,
-
         pais: this.pais.value
-
       };
 
-
-
-      // Llamada a la función de AppScript que ya corregimos
-
       google.script.run.withSuccessHandler(function(res) {
-
         if(res.status === 'ok') {
-
-          // Tracking de conversión para tus anuncios de Meta
-
+          // Tracking de Lead para Meta Ads
           if (typeof fbq !== 'undefined') fbq('track', 'Lead'); 
-
           
-
           document.getElementById('regForm').style.display = 'none';
-
           document.getElementById('mensaje').style.display = 'block';
-
         } else {
-
-          alert('Ups! Algo falló: ' + res.message);
-
+          alert('Error: ' + res.message);
           btn.disabled = false;
-
           btn.innerText = 'SOLICITAR ACCESO GRATIS';
-
         }
-
       }).registrarDesdeLanding(datos);
-
     };
-
   </script>
-
 </body>
-
 </html>
