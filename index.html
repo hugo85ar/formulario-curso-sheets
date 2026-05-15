@@ -164,33 +164,47 @@
     </div>
   </div>
 
-  <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
+ <script>
+  // Tu URL de Web App (Asegurate que sea la de la última implementación)
+  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
 
-    document.getElementById('regForm').onsubmit = function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('btnEnvio');
-      btn.disabled = true;
-      btn.innerText = 'PROCESANDO...';
+  document.getElementById('regForm').onsubmit = function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btnEnvio');
+    btn.disabled = true;
+    btn.innerText = 'PROCESANDO...';
 
-      const formData = new FormData(this);
-      
-      fetch(WEB_APP_URL, {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors' 
-      })
-      .then(() => {
-        fbq('track', 'Lead'); 
-        document.getElementById('regForm').style.display = 'none';
-        document.getElementById('mensaje').style.display = 'block';
-      })
-      .catch(error => {
-        alert('Error al conectar con el servidor');
-        btn.disabled = false;
-        btn.innerText = 'SOLICITAR ACCESO GRATIS';
-      });
+    // Extraemos los datos del formulario
+    const datos = {
+      nombre: this.nombre.value,
+      apellido: this.apellido.value,
+      email: this.email.value,
+      pais: this.pais.value
     };
-  </script>
+
+    // Enviamos usando una URL con parámetros (método más confiable para Apps Script con GitHub Pages)
+    const queryString = new URLSearchParams(datos).toString();
+    
+    fetch(`${WEB_APP_URL}?${queryString}`, {
+      method: 'POST',
+      mode: 'no-cors'
+    })
+    .then(() => {
+      // Registro del evento en el Píxel de Meta
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead'); 
+      }
+      
+      document.getElementById('regForm').style.display = 'none';
+      document.getElementById('mensaje').style.display = 'block';
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Hubo un problema al enviar los datos. Intentá de nuevo.');
+      btn.disabled = false;
+      btn.innerText = 'SOLICITAR ACCESO GRATIS';
+    });
+  };
+</script>
 </body>
 </html>
