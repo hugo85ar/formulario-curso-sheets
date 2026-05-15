@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <base target="_top">
   <title>Registro Curso Gratis - Hugo Alvigini</title>
   
   <script>
@@ -12,8 +11,6 @@
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    
-    // ID ACTUALIZADO
     fbq('init', '2189151328193841'); 
     fbq('track', 'PageView');
   </script>
@@ -25,19 +22,16 @@
     .logo { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 20px; object-fit: cover; }
     h2 { color: var(--primary); margin-bottom: 10px; font-size: 22px; }
     p { color: var(--text); margin-bottom: 25px; font-size: 14px; line-height: 1.5; }
-    input { width: 100%; padding: 12px 15px; margin: 8px 0; border: 1px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; font-size: 16px; outline: none; transition: 0.3s; }
-    input:focus { border-color: var(--primary); box-shadow: 0 0 5px rgba(30,60,114,0.2); }
-    button { width: 100%; background: var(--success); color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 15px; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
-    button:hover { background: #4cae4c; transform: translateY(-2px); }
-    button:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; }
+    input { width: 100%; padding: 12px 15px; margin: 8px 0; border: 1px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; font-size: 16px; outline: none; }
+    button { width: 100%; background: var(--success); color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 15px; text-transform: uppercase; }
+    button:disabled { background: #cbd5e1; }
     #mensaje { display: none; color: #059669; font-weight: bold; margin-top: 20px; background: #ecfdf5; padding: 15px; border-radius: 10px; border: 1px solid #a7f3d0; }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" class="logo" alt="Hugo Alvigini">
-    
+    <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/v1762869486/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li.png" class="logo">
     <h2>🚀 ¡Hacé tus procesos inteligentes!</h2>
     <p>Completá tus datos y recibí acceso inmediato al curso gratuito de Google Sheets.</p>
     
@@ -51,37 +45,42 @@
     
     <div id="mensaje">
       ✨ ¡Genial! Registro exitoso.<br>
-      <small style="font-weight: normal;">Revisá tu email en unos minutos para tus credenciales.</small>
+      <small style="font-weight: normal;">Revisá tu email en unos minutos.</small>
     </div>
   </div>
 
   <script>
+    // URL DE TU IMPLEMENTACIÓN (WEB APP)
+                       
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
+
     document.getElementById('regForm').onsubmit = function(e) {
       e.preventDefault();
       const btn = document.getElementById('btnEnvio');
       btn.disabled = true;
       btn.innerText = 'PROCESANDO...';
 
-      const datos = {
-        nombre: this.nombre.value,
-        apellido: this.apellido.value,
-        email: this.email.value,
-        pais: this.pais.value
-      };
-
-      google.script.run.withSuccessHandler(function(res) {
-        if(res.status === 'ok') {
-          // Tracking de Lead para Meta Ads
-          if (typeof fbq !== 'undefined') fbq('track', 'Lead'); 
-          
-          document.getElementById('regForm').style.display = 'none';
-          document.getElementById('mensaje').style.display = 'block';
-        } else {
-          alert('Error: ' + res.message);
-          btn.disabled = false;
-          btn.innerText = 'SOLICITAR ACCESO GRATIS';
-        }
-      }).registrarDesdeLanding(datos);
+      // Creamos un objeto FormData para enviar a la Web App
+      const formData = new FormData(this);
+      
+      // Enviamos los datos mediante fetch (Petición externa)
+      fetch(WEB_APP_URL, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors' // Necesario para evitar bloqueos de seguridad de Google
+      })
+      .then(() => {
+        // Como usamos no-cors, no podemos leer la respuesta de Google,
+        // pero si llegó hasta aquí sin error, asumimos éxito.
+        fbq('track', 'Lead'); 
+        document.getElementById('regForm').style.display = 'none';
+        document.getElementById('mensaje').style.display = 'block';
+      })
+      .catch(error => {
+        alert('Error al conectar con el servidor');
+        btn.disabled = false;
+        btn.innerText = 'SOLICITAR ACCESO GRATIS';
+      });
     };
   </script>
 </body>
