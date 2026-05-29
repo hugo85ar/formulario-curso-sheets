@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro Curso Gratis - Hugo Alvigini</title>
   
+  <!-- Font Awesome para los íconos persuasivos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
   <script>
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -18,7 +21,7 @@
  <style>
   :root { 
     --primary: #1e3c72; 
-    --success: #5cb85c; 
+    --success: #75b86b; /* Un verde más brillante y moderno para el llamado a la acción */
     --text: #64748b; 
     --dark-bg: #1e293b;
   }
@@ -49,7 +52,7 @@
     flex-direction: row;
     overflow: hidden;
     backdrop-filter: blur(12px);
-    margin-top: 160px; /* Ajustado para que bajen un poco más los emprendedores */
+    margin-top: 40px; /* Ajustado para mejor equilibrio en todas las pantallas */
   }
 
   .card-left {
@@ -82,22 +85,23 @@
     justify-content: center;
   }
 
-  h2 { color: var(--dark-bg); margin: 0 0 10px 0; font-size: 24px; font-weight: 700; }
+  h2 { color: var(--dark-bg); margin: 0 0 10px 0; font-size: 26px; font-weight: 700; line-height: 1.2; }
   p { color: var(--text); margin-bottom: 20px; font-size: 15px; line-height: 1.5; }
   
   input { 
     width: 100%; 
-    padding: 12px 16px; 
-    margin: 6px 0; 
+    padding: 14px 16px; 
+    margin: 8px 0; 
     border: 1px solid #e2e8f0; 
     border-radius: 12px; 
     box-sizing: border-box; 
     font-size: 15px; 
     background: white;
     outline: none;
+    transition: 0.2s;
   }
 
-  input:focus { border-color: var(--primary); }
+  input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30,60,114,0.1); }
 
   button { 
     width: 100%; 
@@ -109,17 +113,35 @@
     font-weight: bold; 
     cursor: pointer; 
     font-size: 16px; 
-    margin-top: 15px; 
+    margin-top: 10px; 
     text-transform: uppercase;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(117,184,107,0.3);
   }
 
-  button:hover { background: #4cae4c; transform: translateY(-2px); }
-  button:disabled { background: #cbd5e1; cursor: not-allowed; }
+  button:hover { background: #62a359; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(117,184,107,0.4); }
+  button:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* Lista de beneficios abajo del botón */
+  .trust-markers {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #4b5563;
+  }
+  .marker-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .marker-item i {
+    margin-right: 8px;
+    font-size: 14px;
+  }
 
   @media (max-width: 768px) {
     .card { flex-direction: column; margin-top: 20px; max-width: 400px; }
-    .card-left { border-right: none; border-bottom: 1px solid #e2e8f0; padding: 30px; }
+    .card-left { border-right: none; border-bottom: 1px solid #e2e8f0; padding: 35px 30px 25px 30px; }
+    .card-right { padding: 30px; }
     .logo { width: 120px; height: 120px; }
   }
 
@@ -144,18 +166,38 @@
       <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/f_auto,q_auto/v1778806879/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li_1_1_uos6ak.webp" class="logo" alt="Hugo Alvigini">
       <div style="text-align: center;">
         <h2>🚀 ¡Hacé tus procesos inteligentes!</h2>
-        <p>Accedé al curso gratuito de Google Sheets.</p>
+        <p style="margin-bottom: 0;">Accedé al curso gratuito de Google Sheets y automatizaciones.</p>
       </div>
     </div>
 
     <div class="card-right">
       <form id="regForm">
+        <!-- CAMPOS VISIBLES: Fricción Cero -->
         <input type="text" name="nombre" placeholder="Tu Nombre" required>
-        <input type="text" name="apellido" placeholder="Tu Apellido" required>
         <input type="email" name="email" placeholder="Tu mejor Email" required>
-        <input type="text" name="pais" placeholder="Tu País" required>
+        
+        <!-- CAMPOS COMPATIBLES (OCULTOS): Respetan la estructura de tu Sheets actual -->
+        <input type="hidden" name="apellido" value="-">
+        <input type="hidden" name="pais" value="Latam">
+        
         <button type="submit" id="btnEnvio">SOLICITAR ACCESO GRATIS</button>
       </form>
+      
+      <!-- GANCHOS PERSUASIVOS BAJO EL BOTÓN -->
+      <div class="trust-markers">
+        <div class="marker-item">
+          <i class="fas fa-check-circle" style="color: #75b86b;"></i>
+          <span>Acceso instantáneo y 100% gratuito.</span>
+        </div>
+        <div class="marker-item">
+          <i class="fas fa-gift" style="color: #1e3c72;"></i>
+          <span><strong>Bono de regalo:</strong> Script para enviar WhatsApp masivos.</span>
+        </div>
+        <div class="marker-item" style="color: #94a3b8; margin-top: 12px; justify-content: center; font-size: 12px;">
+          <i class="fas fa-lock"></i>
+          <span>Tus datos están protegidos. Cero Spam.</span>
+        </div>
+      </div>
       
       <div id="mensaje">
         ✨ ¡Genial! Registro exitoso.<br>
@@ -165,7 +207,6 @@
   </div>
 
  <script>
-  // Asegúrate de que esta URL sea la de la ÚLTIMA implementación (versión nueva)
   const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
 
   document.getElementById('regForm').onsubmit = function(e) {
@@ -176,16 +217,15 @@
 
     const datos = {
       nombre: this.nombre.value,
-      apellido: this.apellido.value,
+      apellido: this.apellido.value, // Envía el "-" automático
       email: this.email.value,
-      pais: this.pais.value
+      pais: this.pais.value // Envía el "Latam" automático
     };
 
     const queryString = new URLSearchParams(datos).toString();
     
-    // CAMBIO AQUÍ: Usamos el método GET que es más "amigable" con Apps Script desde dominios externos
     fetch(`${WEB_APP_URL}?${queryString}`, {
-      method: 'GET', // Cambiado de POST a GET
+      method: 'GET',
       mode: 'no-cors'
     })
     .then(() => {
@@ -193,7 +233,9 @@
         fbq('track', 'Lead'); 
       }
       
+      // Oculta el formulario y los textos de confianza al tener éxito
       document.getElementById('regForm').style.display = 'none';
+      document.querySelector('.trust-markers').style.display = 'none';
       document.getElementById('mensaje').style.display = 'block';
     })
     .catch(error => {
