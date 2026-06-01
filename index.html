@@ -21,15 +21,16 @@
  <style>
   :root { 
     --primary: #1e3c72; 
-    --success: #75b86b; /* Un verde más brillante y moderno para el llamado a la acción */
-    --text: #64748b; 
-    --dark-bg: #1e293b;
+    --success: #22c55e; /* Un verde vibrante moderno de alta conversión */
+    --text: #475569; 
+    --dark-bg: #0f172a; /* Fondo oscuro tecnológico y premium */
   }
   
   body { 
     font-family: 'Open Sans', sans-serif; 
-    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
-                url('https://res.cloudinary.com/dlnrsadbc/image/upload/q_auto,f_auto/v1778884479/organic_integration_e3g66o.webp');
+    /* Fondo entusiasta, tecnológico y con menor opacidad negra para dar brillo */
+    background: linear-gradient(rgba(15, 23, 42, 0.5), rgba(30, 60, 114, 0.6)), 
+                url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -43,16 +44,16 @@
   }
 
   .card { 
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(255, 255, 255, 0.98);
     border-radius: 24px; 
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4); 
     width: 100%; 
     max-width: 850px; 
     display: flex; 
     flex-direction: row;
     overflow: hidden;
     backdrop-filter: blur(12px);
-    margin-top: 40px; /* Ajustado para mejor equilibrio en todas las pantallas */
+    margin-top: 20px;
   }
 
   .card-left {
@@ -86,13 +87,14 @@
   }
 
   h2 { color: var(--dark-bg); margin: 0 0 10px 0; font-size: 26px; font-weight: 700; line-height: 1.2; }
+  h3 { color: var(--primary); margin: 0 0 15px 0; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   p { color: var(--text); margin-bottom: 20px; font-size: 15px; line-height: 1.5; }
   
   input { 
     width: 100%; 
     padding: 14px 16px; 
     margin: 8px 0; 
-    border: 1px solid #e2e8f0; 
+    border: 1px solid #cbd5e1; 
     border-radius: 12px; 
     box-sizing: border-box; 
     font-size: 15px; 
@@ -110,38 +112,38 @@
     border: none; 
     padding: 16px; 
     border-radius: 12px; 
-    font-weight: bold; 
+    font-weight: 800; 
     cursor: pointer; 
     font-size: 16px; 
-    margin-top: 8px; /* Ajustado sutilmente para emparejar la simetría con los inputs */
+    margin-top: 12px; 
     text-transform: uppercase;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(117,184,107,0.3);
+    box-shadow: 0 4px 15px rgba(34,197,94,0.3);
+    letter-spacing: 0.5px;
   }
 
-  button:hover { background: #62a359; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(117,184,107,0.4); }
+  button:hover { background: #16a34a; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34,197,94,0.4); }
   button:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
 
   /* Lista de beneficios abajo del botón */
   .trust-markers {
     margin-top: 20px;
     font-size: 13px;
-    color: #4b5563;
+    color: #334155;
   }
   .marker-item {
     display: flex;
-    align-items: center; /* Centra los íconos perfectamente en el eje vertical con el texto */
-    margin-bottom: 8px;
+    align-items: flex-start; 
+    margin-bottom: 10px;
   }
   .marker-item i {
-    margin-right: 8px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
+    margin-right: 10px;
+    font-size: 15px;
+    margin-top: 2px;
   }
 
   @media (max-width: 768px) {
-    .card { flex-direction: column; margin-top: 20px; max-width: 400px; }
+    .card { flex-direction: column; margin-top: 10px; max-width: 400px; }
     .card-left { border-right: none; border-bottom: 1px solid #e2e8f0; padding: 35px 30px 25px 30px; }
     .card-right { padding: 30px; }
     .logo { width: 120px; height: 120px; }
@@ -149,11 +151,11 @@
 
   #mensaje { 
     display: none; 
-    color: #059669; 
-    background: #ecfdf5; 
-    padding: 15px; 
+    color: #0693e3; 
+    background: #f0f9ff; 
+    padding: 20px; 
     border-radius: 12px; 
-    border: 1px solid #a7f3d0; 
+    border: 1px solid #bae6fd; 
     margin-top: 20px;
     font-weight: bold;
     text-align: center;
@@ -168,60 +170,64 @@
       <img src="https://res.cloudinary.com/dlnrsadbc/image/upload/f_auto,q_auto/v1778806879/Gemini_Generated_Image_nm1t21nm1t21nm1t_s7w9li_1_1_uos6ak.webp" class="logo" alt="Hugo Alvigini">
       <div style="text-align: center;">
         <h2>🚀 ¡Hacé tus procesos inteligentes!</h2>
-        <p style="margin-bottom: 0;">Accedé al curso gratuito de Google Sheets y automatizaciones.</p>
+        <p style="margin-bottom: 0; font-weight: 600; color: #1e3c72;">Curso gratuito de Google Sheets y Automatizaciones.</p>
       </div>
     </div>
 
     <div class="card-right">
+      <h3>Acceso Exclusivo para Emprendedores</h3>
+      <h2>Dejá de perder tiempo en tareas repetitivas</h2>
+      <p>Registrate hoy para aprender a automatizar tu negocio, conectar tus herramientas y gestionar todo de manera inteligente y sin errores.</p>
+      
       <form id="regForm">
         <!-- CAMPOS VISIBLES: Fricción Cero -->
         <input type="text" name="nombre" placeholder="Tu Nombre" required>
-        <input type="email" name="email" placeholder="Tu mejor Email" required>
+        <input type="email" name="email" placeholder="Tu mejor Email de Negocios" required>
         
-        <!-- CAMPOS COMPATIBLES (OCULTOS): Respetan la estructura de tu Sheets actual -->
+        <!-- CAMPOS COMPATIBLES (OCULTOS): Estructura Sheets intacta -->
         <input type="hidden" name="apellido" value="-">
         <input type="hidden" name="pais" value="Latam">
         
-        <button type="submit" id="btnEnvio">SOLICITAR ACCESO GRATIS</button>
+        <button type="submit" id="btnEnvio">¡Quiero Acceder Ahora! 🚀</button>
       </form>
       
       <!-- GANCHOS PERSUASIVOS BAJO EL BOTÓN -->
       <div class="trust-markers">
         <div class="marker-item">
-          <i class="fas fa-check-circle" style="color: #75b86b;"></i>
-          <span>Acceso instantáneo y 100% gratuito.</span>
+          <i class="fas fa-bolt" style="color: #eab308;"></i>
+          <span><strong>Acceso Instantáneo:</strong> Recibís las clases directo en tu bandeja de entrada.</span>
         </div>
         <div class="marker-item">
           <i class="fas fa-gift" style="color: #1e3c72;"></i>
-          <span><strong>Bono de regalo:</strong> Script para enviar WhatsApp masivos.</span>
+          <span><strong>Regalo Incluido:</strong> Script funcional para enviar mensajes masivos por WhatsApp.</span>
         </div>
         <div class="marker-item" style="color: #94a3b8; margin-top: 14px; justify-content: center; font-size: 12px;">
-          <i class="fas fa-lock" style="margin-right: 5px;"></i>
-          <span>Tus datos están protegidos. Cero Spam.</span>
+          <i class="fas fa-shield-alt" style="margin-right: 5px;"></i>
+          <span>Tus datos están 100% protegidos. Cero Spam.</span>
         </div>
       </div>
       
       <div id="mensaje">
-        ✨ ¡Genial! Registro exitoso.<br>
-        <small style="font-weight: normal;">Revisá tu email en unos minutos.</small>
+        🎉 ¡Excelente elección, Hugo!<br>
+        <span style="font-weight: normal; font-size: 14px; color: #334155;">El acceso al curso y tu regalo ya están viajando a tu correo.</span>
       </div>
     </div>
   </div>
 
- <script>
+  <script>
   const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
 
   document.getElementById('regForm').onsubmit = function(e) {
     e.preventDefault();
     const btn = document.getElementById('btnEnvio');
     btn.disabled = true;
-    btn.innerText = 'PROCESANDO...';
+    btn.innerText = 'PROCESANDO TU ACCESO...';
 
     const datos = {
       nombre: this.nombre.value,
-      apellido: this.apellido.value, // Envía el "-" automático
+      apellido: this.apellido.value, 
       email: this.email.value,
-      pais: this.pais.value // Envía el "Latam" automático
+      pais: this.pais.value 
     };
 
     const queryString = new URLSearchParams(datos).toString();
@@ -244,7 +250,7 @@
       console.error('Error:', error);
       alert('Hubo un problema. Intentá de nuevo.');
       btn.disabled = false;
-      btn.innerText = 'SOLICITAR ACCESO GRATIS';
+      btn.innerText = '¡Quiero Acceder Ahora! 🚀';
     });
   };
 </script>
