@@ -21,16 +21,16 @@
  <style>
   :root { 
     --primary: #1e3c72; 
-    --success: #22c55e; /* Un verde vibrante moderno de alta conversión */
+    --success: #22c55e; 
     --text: #475569; 
-    --dark-bg: #0f172a; /* Fondo oscuro tecnológico y premium */
+    --dark-bg: #0f172a; 
   }
   
   body { 
     font-family: 'Open Sans', sans-serif; 
-    /* Fondo entusiasta, tecnológico y con menor opacidad negra para dar brillo */
-    background: linear-gradient(rgba(15, 23, 42, 0.5), rgba(30, 60, 114, 0.6)), 
-                url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop');
+    /* Fondo limpio que representa automatización de flujos de datos, código y software */
+    background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(30, 60, 114, 0.75)), 
+                url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -88,8 +88,19 @@
 
   h2 { color: var(--dark-bg); margin: 0 0 10px 0; font-size: 26px; font-weight: 700; line-height: 1.2; }
   h3 { color: var(--primary); margin: 0 0 15px 0; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-  p { color: var(--text); margin-bottom: 20px; font-size: 15px; line-height: 1.5; }
+  p { color: var(--text); margin-bottom: 20px; font-size: 14.5px; line-height: 1.5; }
   
+  .highlight-box {
+    background: #f0fdf4;
+    border-left: 4px solid var(--success);
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 20px;
+    font-size: 13.5px;
+    color: #166534;
+    line-height: 1.4;
+  }
+
   input { 
     width: 100%; 
     padding: 14px 16px; 
@@ -125,7 +136,6 @@
   button:hover { background: #16a34a; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34,197,94,0.4); }
   button:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
 
-  /* Lista de beneficios abajo del botón */
   .trust-markers {
     margin-top: 20px;
     font-size: 13px;
@@ -177,39 +187,40 @@
     <div class="card-right">
       <h3>Acceso Exclusivo para Emprendedores</h3>
       <h2>Dejá de perder tiempo en tareas repetitivas</h2>
-      <p>Registrate hoy para aprender a automatizar tu negocio, conectar tus herramientas y gestionar todo de manera inteligente y sin errores.</p>
+      <p>Registrate hoy para aprender a automatizar tu negocio, conectar tus herramientas y gestionar todo de manera inteligente, sin errores <strong>y usando herramientas 100% gratuitas</strong>.</p>
+      
+      <div class="highlight-box">
+        <i class="fas fa-info-circle"></i> Ya habrá tiempo para invertir en software costoso y nuevas herramientas complejas; primero aprendé a hacer crecer tu estructura actual a coste cero.
+      </div>
       
       <form id="regForm">
-        <!-- CAMPOS VISIBLES: Fricción Cero -->
         <input type="text" name="nombre" placeholder="Tu Nombre" required>
         <input type="email" name="email" placeholder="Tu mejor Email de Negocios" required>
         
-        <!-- CAMPOS COMPATIBLES (OCULTOS): Estructura Sheets intacta -->
         <input type="hidden" name="apellido" value="-">
         <input type="hidden" name="pais" value="Latam">
         
         <button type="submit" id="btnEnvio">¡Quiero Acceder Ahora! 🚀</button>
       </form>
       
-      <!-- GANCHOS PERSUASIVOS BAJO EL BOTÓN -->
       <div class="trust-markers">
         <div class="marker-item">
           <i class="fas fa-bolt" style="color: #eab308;"></i>
-          <span><strong>Acceso Instantáneo:</strong> Recibís las clases directo en tu bandeja de entrada.</span>
+          <span><strong>Acceso Instantáneo:</strong> Recibís las lecciones directo en tu bandeja de entrada.</span>
         </div>
         <div class="marker-item">
           <i class="fas fa-gift" style="color: #1e3c72;"></i>
-          <span><strong>Regalo Incluido:</strong> Script funcional para enviar mensajes masivos por WhatsApp.</span>
+          <span><strong>Bono de regalo:</strong> Script funcional para enviar mensajes masivos por WhatsApp sin pagar plataformas externas.</span>
         </div>
         <div class="marker-item" style="color: #94a3b8; margin-top: 14px; justify-content: center; font-size: 12px;">
           <i class="fas fa-shield-alt" style="margin-right: 5px;"></i>
-          <span>Tus datos están 100% protegidos. Cero Spam.</span>
+          <span>Tus datos están protegidos. Cero Spam.</span>
         </div>
       </div>
       
       <div id="mensaje">
-        🎉 ¡Excelente elección, Hugo!<br>
-        <span style="font-weight: normal; font-size: 14px; color: #334155;">El acceso al curso y tu regalo ya están viajando a tu correo.</span>
+        🎉 ¡Excelente elección!<br>
+        <span style="font-weight: normal; font-size: 14px; color: #334155;">El acceso al curso y tus herramientas de regalo ya están viajando a tu correo.</span>
       </div>
     </div>
   </div>
@@ -241,9 +252,9 @@
         fbq('track', 'Lead'); 
       }
       
-      // Oculta el formulario y los textos de confianza al tener éxito
       document.getElementById('regForm').style.display = 'none';
       document.querySelector('.trust-markers').style.display = 'none';
+      document.querySelector('.highlight-box').style.display = 'none';
       document.getElementById('mensaje').style.display = 'block';
     })
     .catch(error => {
