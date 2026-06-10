@@ -267,18 +267,26 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
   <script>
   const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
 
-  document.getElementById('regForm').onsubmit = function(e) {
+    document.getElementById('regForm').onsubmit = function(e) {
     e.preventDefault();
     const btn = document.getElementById('btnEnvio');
     btn.disabled = true;
     btn.innerText = 'PROCESANDO TU ACCESO...';
 
-  const datos = {
-  nombre: this.nombre.value,
-  apellido: this.apellido.value, 
-  email: this.email.value,
-  pais: this.pais.value // Esto tomará automáticamente el valor del nuevo <select>
-};
+    // Capturamos el valor del select
+    let valorPais = this.pais.value;
+    
+    // Si eligió "Otro", sobrescribimos el valor con lo que escribió en el input de texto
+    if (valorPais === 'Otro') {
+      valorPais = this.paisOtro.value;
+    }
+
+    const datos = {
+      nombre: this.nombre.value,
+      apellido: this.apellido.value, 
+      email: this.email.value,
+      pais: valorPais // Aquí enviamos el valor corregido
+    };
 
     const queryString = new URLSearchParams(datos).toString();
     
