@@ -198,15 +198,46 @@
         <i class="fas fa-info-circle"></i> Ya habrá tiempo para invertir en software costoso y nuevas herramientas complejas; primero aprendé a hacer crecer tu estructura actual a coste cero.
       </div>
       
-      <form id="regForm">
-        <input type="text" name="nombre" placeholder="Tu Nombre" required>
-        <input type="email" name="email" placeholder="Tu mejor Email" required>
-        
-        <input type="hidden" name="apellido" value="-">
-        <input type="hidden" name="pais" value="Latam">
-        
-        <button type="submit" id="btnEnvio">¡Quiero Acceder Ahora! 🚀</button>
-      </form>
+<form id="regForm">
+  <input type="text" name="nombre" placeholder="Tu Nombre" required>
+  <input type="email" name="email" placeholder="Tu mejor Email" required>
+  <input type="hidden" name="apellido" value="-">
+
+  <!-- Selector de País -->
+  <div style="margin: 8px 0;">
+    <label style="display:block; font-size: 14px; color: #475569; margin-bottom: 5px; font-weight: 600;">¿Desde qué país te unes?</label>
+    <select name="pais" id="paisSelect" onchange="toggleOtro()" required style="width: 100%; padding: 14px 16px; border: 1px solid #cbd5e1; border-radius: 12px; background: white; font-size: 15px; outline: none;">
+      <option value="" disabled selected>Selecciona tu país</option>
+      <option value="Argentina">Argentina</option>
+      <option value="Chile">Chile</option>
+      <option value="España">España</option>
+      <option value="Mexico">México</option>
+      <option value="Peru">Perú</option>
+      <option value="Venezuela">Venezuela</option>
+      <option value="Puerto Rico">Puerto Rico</option>
+      <option value="Uruguay">Uruguay</option>
+      <option value="Colombia">Colombia</option>
+      <option value="Otro">Otro (Escribir abajo)</option>
+    </select>
+  </div>
+
+  <!-- Campo para especificar país si eligió "Otro" -->
+  <div id="otroPaisDiv" style="display:none; margin-bottom: 10px;">
+    <input type="text" id="paisOtroInput" name="paisOtro" placeholder="¿Cuál es tu país?">
+  </div>
+
+  <button type="submit" id="btnEnvio">¡Quiero Acceder Ahora! 🚀</button>
+</form>
+
+<script>
+  // Función para mostrar/ocultar el campo de texto extra
+  function toggleOtro() {
+    const select = document.getElementById('paisSelect');
+    const div = document.getElementById('otroPaisDiv');
+    div.style.display = (select.value === 'Otro') ? 'block' : 'none';
+    document.getElementById('paisOtroInput').required = (select.value === 'Otro');
+  }
+</script>
       
       <div class="trust-markers">
         <div class="marker-item">
@@ -242,12 +273,12 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
     btn.disabled = true;
     btn.innerText = 'PROCESANDO TU ACCESO...';
 
-    const datos = {
-      nombre: this.nombre.value,
-      apellido: this.apellido.value, 
-      email: this.email.value,
-      pais: this.pais.value 
-    };
+  const datos = {
+  nombre: this.nombre.value,
+  apellido: this.apellido.value, 
+  email: this.email.value,
+  pais: this.pais.value // Esto tomará automáticamente el valor del nuevo <select>
+};
 
     const queryString = new URLSearchParams(datos).toString();
     
