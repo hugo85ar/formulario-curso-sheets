@@ -18,7 +18,7 @@
     fbq('track', 'PageView');
   </script>
   
- <style>
+<style>
   :root { 
     --primary: #1e3c72; 
     --success: #22c55e; 
@@ -34,12 +34,10 @@
     background-position: center;
     background-attachment: fixed;
     display: flex; 
-    /* Cambiamos a flex-end para empujar la tarjeta a la derecha en PC */
     justify-content: flex-end; 
     align-items: center; 
     min-height: 100vh; 
     margin: 0; 
-    /* Agregamos un padding derecho amplio para que la tarjeta no pegue contra el borde de la pantalla */
     padding: 20px 10% 20px 20px; 
     box-sizing: border-box; 
   }
@@ -102,7 +100,7 @@
     line-height: 1.4;
   }
 
-  input { 
+  input, select { 
     width: 100%; 
     padding: 14px 16px; 
     margin: 8px 0; 
@@ -115,7 +113,7 @@
     transition: 0.2s;
   }
 
-  input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30,60,114,0.1); }
+  input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30,60,114,0.1); }
 
   button { 
     width: 100%; 
@@ -206,7 +204,7 @@
   <!-- Selector de País -->
   <div style="margin: 8px 0;">
     <label style="display:block; font-size: 14px; color: #475569; margin-bottom: 5px; font-weight: 600;">¿Desde qué país te unes?</label>
-    <select name="pais" id="paisSelect" onchange="toggleOtro()" required style="width: 100%; padding: 14px 16px; border: 1px solid #cbd5e1; border-radius: 12px; background: white; font-size: 15px; outline: none;">
+    <select name="pais" id="paisSelect" onchange="toggleOtro()" required>
       <option value="" disabled selected>Selecciona tu país</option>
       <option value="Argentina">Argentina</option>
       <option value="Chile">Chile</option>
@@ -234,8 +232,16 @@
   function toggleOtro() {
     const select = document.getElementById('paisSelect');
     const div = document.getElementById('otroPaisDiv');
-    div.style.display = (select.value === 'Otro') ? 'block' : 'none';
-    document.getElementById('paisOtroInput').required = (select.value === 'Otro');
+    const inputOtro = document.getElementById('paisOtroInput');
+    
+    if (select.value === 'Otro') {
+      div.style.display = 'block';
+      inputOtro.required = true;
+    } else {
+      div.style.display = 'none';
+      inputOtro.required = false;
+      inputOtro.value = ''; // Limpia si cambia de opinión
+    }
   }
 </script>
       
@@ -267,25 +273,25 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
   <script>
   const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
 
-    document.getElementById('regForm').onsubmit = function(e) {
+  document.getElementById('regForm').onsubmit = function(e) {
     e.preventDefault();
     const btn = document.getElementById('btnEnvio');
     btn.disabled = true;
     btn.innerText = 'PROCESANDO TU ACCESO...';
 
     // Capturamos el valor del select
-    let valorPais = this.pais.value;
+    let valorPais = document.getElementById('paisSelect').value;
     
-    // Si eligió "Otro", sobrescribimos el valor con lo que escribió en el input de texto
+    // Si eligió "Otro", sobrescribimos con el valor del input de texto
     if (valorPais === 'Otro') {
-      valorPais = this.paisOtro.value;
+      valorPais = document.getElementById('paisOtroInput').value;
     }
 
     const datos = {
       nombre: this.nombre.value,
       apellido: this.apellido.value, 
       email: this.email.value,
-      pais: valorPais // Aquí enviamos el valor corregido
+      pais: valorPais
     };
 
     const queryString = new URLSearchParams(datos).toString();
