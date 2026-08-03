@@ -196,108 +196,180 @@
         <i class="fas fa-info-circle"></i> Ya habrá tiempo para invertir en software costoso y nuevas herramientas complejas; primero aprendé a hacer crecer tu estructura actual a coste cero.
       </div>
       
-<form id="regForm">
- <input type="hidden" id="origenPack" name="origenPack" value="curso_gratis">
-  <input type="text" name="nombre" placeholder="Tu Nombre" required>
-  <input type="email" name="email" placeholder="Tu mejor Email" required>
-  <input type="hidden" name="apellido" value="-">
+      <form id="regForm">
+        <input type="hidden" id="origenPack" name="origenPack" value="curso_gratis">
+        <input type="text" name="nombre" placeholder="Tu Nombre" required>
+        <input type="email" name="email" placeholder="Tu mejor Email" required>
+        <input type="hidden" name="apellido" value="-">
 
-  <!-- Selector de País -->
-  <div style="margin: 8px 0;">
-    <label style="display:block; font-size: 14px; color: #475569; margin-bottom: 5px; font-weight: 600;">¿Desde qué país te unes?</label>
-    <select name="pais" id="paisSelect" onchange="toggleOtro()" required>
-      <option value="" disabled selected>Selecciona tu país</option>
-      <option value="Argentina">Argentina</option>
-      <option value="Chile">Chile</option>
-      <option value="España">España</option>
-      <option value="Mexico">México</option>
-      <option value="Peru">Perú</option>
-      <option value="Venezuela">Venezuela</option>
-      <option value="Puerto Rico">Puerto Rico</option>
-      <option value="Uruguay">Uruguay</option>
-      <option value="Colombia">Colombia</option>
-      <option value="Otro">Otro (Escribir abajo)</option>
-    </select>
+        <!-- Selector de País -->
+        <div style="margin: 8px 0;">
+          <label style="display:block; font-size: 14px; color: #475569; margin-bottom: 5px; font-weight: 600;">¿Desde qué país te unes?</label>
+          <select name="pais" id="paisSelect" onchange="toggleOtro()" required>
+            <option value="" disabled selected>Selecciona tu país</option>
+            <option value="Argentina">Argentina</option>
+            <option value="Chile">Chile</option>
+            <option value="España">España</option>
+            <option value="Mexico">México</option>
+            <option value="Peru">Perú</option>
+            <option value="Venezuela">Venezuela</option>
+            <option value="Puerto Rico">Puerto Rico</option>
+            <option value="Uruguay">Uruguay</option>
+            <option value="Colombia">Colombia</option>
+            <option value="Otro">Otro (Escribir abajo)</option>
+          </select>
+        </div>
+
+        <!-- Campo para especificar país si eligió "Otro" -->
+        <div id="otroPaisDiv" style="display:none; margin-bottom: 10px;">
+          <input type="text" id="paisOtroInput" name="paisOtro" placeholder="¿Cuál es tu país?">
+        </div>
+
+        <button type="submit" id="btnEnvio">¡Quiero Acceder Ahora! 🚀</button>
+      </form>
+
+      <div class="trust-markers">
+        <div class="marker-item">
+          <i class="fas fa-bolt" style="color: #eab308;"></i>
+          <span><strong>Acceso Instantáneo:</strong> Recibís las lecciones directo en tu bandeja de entrada.</span>
+        </div>
+        <div class="marker-item">
+          <i class="fas fa-gift" style="color: #1e3c72;"></i>
+          <span><strong>Bono de regalo:</strong> Script funcional para enviar mensajes masivos por WhatsApp sin pagar plataformas externas.</span>
+        </div>
+        <div class="marker-item" style="color: #94a3b8; margin-top: 14px; justify-content: center; font-size: 12px;">
+          <i class="fas fa-shield-alt" style="margin-right: 5px;"></i>
+          <span>Tus datos están protegidos. Cero Spam.</span>
+        </div>
+      </div>
+      
+      <div id="mensaje">
+        🎉 ¡Excelente elección! Revisá tu bandeja de entrada ahora.<br>
+        <span style="font-weight: normal; font-size: 14px; color: #334155;">¡Inscripción confirmada!
+
+Te enviamos el acceso al curso y tus herramientas de regalo.
+(Si no lo ves, chequeá también la carpeta de Spam)..</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Campo para especificar país si eligió "Otro" -->
-  <div id="otroPaisDiv" style="display:none; margin-bottom: 10px;">
-    <input type="text" id="paisOtroInput" name="paisOtro" placeholder="¿Cuál es tu país?">
-  </div>
-
-  <button type="submit" id="btnEnvio">¡Quiero Acceder Ahora! 🚀</button>
-</form>
-
-
-      <script>
-  // 1. Función para mostrar/ocultar el campo de texto extra cuando eligen "Otro" país
-  function toggleOtro() {
-    const select = document.getElementById('paisSelect');
-    const div = document.getElementById('otroPaisDiv');
-    const inputOtro = document.getElementById('paisOtroInput');
-    
-    if (select.value === 'Otro') {
-      div.style.display = 'block';
-      inputOtro.required = true;
-    } else {
-      div.style.display = 'none';
-      inputOtro.required = false;
-      inputOtro.value = ''; // Limpia si cambia de opinión
+  <script>
+    // 1. Función para mostrar/ocultar el campo de texto extra cuando eligen "Otro" país
+    function toggleOtro() {
+      const select = document.getElementById('paisSelect');
+      const div = document.getElementById('otroPaisDiv');
+      const inputOtro = document.getElementById('paisOtroInput');
+      
+      if (select.value === 'Otro') {
+        div.style.display = 'block';
+        inputOtro.required = true;
+      } else {
+        div.style.display = 'none';
+        inputOtro.required = false;
+        inputOtro.value = ''; 
+      }
     }
-  }
 
-  // 2. Detectar automáticamente si el usuario llega con un pack en la URL (ej: ?pack=pack1)
-  window.addEventListener('DOMContentLoaded', (event) => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const pack = urlParams.get('pack');
-    
-    if (pack) {
-      const inputOrigen = document.getElementById('origenPack');
-      if (inputOrigen) {
-        inputOrigen.value = pack;
+    // 2. Detectar automáticamente si el usuario llega con un pack en la URL y cambiar textos
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const pack = urlParams.get('pack');
+      
+      if (pack) {
+        const inputOrigen = document.getElementById('origenPack');
+        if (inputOrigen) {
+          inputOrigen.value = pack;
+        }
+
+        const infoPacks = {
+          'pack1': {
+            subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
+            tituloPrincipal: 'Desbloqueaste el Pack 1 Pro',
+            descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
+            cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
+          },
+          'pack2': {
+            subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
+            tituloPrincipal: 'Desbloqueaste el Pack 2 Avanzado',
+            descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
+            cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
+          },
+          'pack3': {
+            subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
+            tituloPrincipal: 'Desbloqueaste el Pack Full Master',
+            descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
+            cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
+          }
+        };
+
+        if (infoPacks[pack]) {
+          const datosPack = infoPacks[pack];
+          
+          document.querySelector('.card-left h2').innerHTML = `🚀 ¡ ${datosPack.tituloPrincipal} !`;
+          document.querySelector('.card-left p').innerText = datosPack.subtitulo;
+
+          document.querySelector('.card-right h3').innerText = datosPack.subtitulo;
+          document.querySelector('.card-right h2').innerText = datosPack.tituloPrincipal;
+          document.querySelector('.card-right p').innerHTML = datosPack.descripcion;
+          document.querySelector('.highlight-box').innerHTML = `<i class="fas fa-check-circle"></i> ${datosPack.cajaVerde}`;
+        }
+      }
+    });
+
+    // 3. Manejar el envío del formulario mediante fetch sin recargar la página
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
+
+    document.getElementById('regForm').onsubmit = function(e) {
+      e.preventDefault(); // Evita que se recargue la página
+      
+      const btn = document.getElementById('btnEnvio');
+      btn.disabled = true;
+      btn.innerText = 'PROCESANDO TU ACCESO...';
+
+      let valorPais = document.getElementById('paisSelect').value;
+      if (valorPais === 'Otro') {
+        valorPais = document.getElementById('paisOtroInput').value;
       }
 
-      // Diccionario para personalizar los textos visuales según el pack
-      const infoPacks = {
-        'pack1': {
-          subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
-          tituloPrincipal: 'Desbloqueaste el Pack 1 Pro',
-          descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
-          cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
-        },
-        'pack2': {
-          subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
-          tituloPrincipal: 'Desbloqueaste el Pack 2 Avanzado',
-          descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
-          cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
-        },
-        'pack3': {
-          subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
-          tituloPrincipal: 'Desbloqueaste el Pack Full Master',
-          descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
-          cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
-        }
+      const origenInput = document.getElementById('origenPack');
+      const valorOrigen = origenInput ? origenInput.value : 'curso_gratis';
+
+      const datos = {
+        nombre: this.nombre.value,
+        apellido: this.apellido.value, 
+        email: this.email.value,
+        pais: valorPais,
+        origenPack: valorOrigen
       };
 
-      // Si el pack existe en nuestro diccionario, cambiamos los textos de la tarjeta izquierda y derecha
-      if (infoPacks[pack]) {
-        const datosPack = infoPacks[pack];
-        
-        // Cambiar textos de la izquierda
-        document.querySelector('.card-left h2').innerHTML = `🚀 ¡ ${datosPack.tituloPrincipal} !`;
-        document.querySelector('.card-left p').innerText = datosPack.subtitulo;
-
-        // Cambiar textos de la derecha
-        document.querySelector('.card-right h3').innerText = datosPack.subtitulo;
-        document.querySelector('.card-right h2').innerText = datosPack.tituloPrincipal;
-        document.querySelector('.card-right p').innerHTML = datosPack.descripcion;
-        document.querySelector('.highlight-box').innerHTML = `<i class="fas fa-check-circle"></i> ${datosPack.cajaVerde}`;
-      }
-
-      console.log("Origen detectado y textos actualizados - Pack: " + pack);
-    }
-  });
-</script>
+      const queryString = new URLSearchParams(datos).toString();
       
+      fetch(`${WEB_APP_URL}?${queryString}`, {
+        method: 'GET',
+        mode: 'no-cors'
+      })
+      .then(() => {
+        if (typeof fbq !== 'undefined') {
+          fbq('track', 'Lead'); 
+        }
+        
+        document.getElementById('regForm').style.display = 'none';
+        
+        const trustMarkers = document.querySelector('.trust-markers');
+        if (trustMarkers) trustMarkers.style.display = 'none';
+        
+        const highlightBox = document.querySelector('.highlight-box');
+        if (highlightBox) highlightBox.style.display = 'none';
+        
+        document.getElementById('mensaje').style.display = 'block';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Hubo un problema. Intentá de nuevo.');
+        btn.disabled = false;
+        btn.innerText = '¡Quiero Acceder Ahora! 🚀';
+      });
+    };
+  </script>
 </body>
 </html>
