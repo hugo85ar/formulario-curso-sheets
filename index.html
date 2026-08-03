@@ -256,67 +256,47 @@
       if (inputOrigen) {
         inputOrigen.value = pack;
       }
-      console.log("Origen detectado - Pack: " + pack);
+
+      // Diccionario para personalizar los textos visuales según el pack
+      const infoPacks = {
+        'pack1': {
+          subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
+          tituloPrincipal: 'Desbloqueaste el Pack 1 Pro',
+          descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
+          cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
+        },
+        'pack2': {
+          subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
+          tituloPrincipal: 'Desbloqueaste el Pack 2 Avanzado',
+          descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
+          cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
+        },
+        'pack3': {
+          subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
+          tituloPrincipal: 'Desbloqueaste el Pack Full Master',
+          descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
+          cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
+        }
+      };
+
+      // Si el pack existe en nuestro diccionario, cambiamos los textos de la tarjeta izquierda y derecha
+      if (infoPacks[pack]) {
+        const datosPack = infoPacks[pack];
+        
+        // Cambiar textos de la izquierda
+        document.querySelector('.card-left h2').innerHTML = `🚀 ¡ ${datosPack.tituloPrincipal} !`;
+        document.querySelector('.card-left p').innerText = datosPack.subtitulo;
+
+        // Cambiar textos de la derecha
+        document.querySelector('.card-right h3').innerText = datosPack.subtitulo;
+        document.querySelector('.card-right h2').innerText = datosPack.tituloPrincipal;
+        document.querySelector('.card-right p').innerHTML = datosPack.descripcion;
+        document.querySelector('.highlight-box').innerHTML = `<i class="fas fa-check-circle"></i> ${datosPack.cajaVerde}`;
+      }
+
+      console.log("Origen detectado y textos actualizados - Pack: " + pack);
     }
   });
-
-  // 3. Lógica de envío del formulario
-  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
-
-  document.getElementById('regForm').onsubmit = function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('btnEnvio');
-    btn.disabled = true;
-    btn.innerText = 'PROCESANDO TU ACCESO...';
-
-    // Capturamos el valor del select
-    let valorPais = document.getElementById('paisSelect').value;
-    
-    // Si eligió "Otro", sobrescribimos con el valor del input de texto
-    if (valorPais === 'Otro') {
-      valorPais = document.getElementById('paisOtroInput').value;
-    }
-
-    // Obtenemos el origen del pack (si vino por URL se cargó, sino toma 'curso_gratis')
-    const origenInput = document.getElementById('origenPack');
-    const valorOrigen = origenInput ? origenInput.value : 'curso_gratis';
-
-    const datos = {
-      nombre: this.nombre.value,
-      apellido: this.apellido.value, 
-      email: this.email.value,
-      pais: valorPais,
-      origenPack: valorOrigen
-    };
-
-    const queryString = new URLSearchParams(datos).toString();
-    
-    fetch(`${WEB_APP_URL}?${queryString}`, {
-      method: 'GET',
-      mode: 'no-cors'
-    })
-    .then(() => {
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'Lead'); 
-      }
-      
-      document.getElementById('regForm').style.display = 'none';
-      
-      const trustMarkers = document.querySelector('.trust-markers');
-      if (trustMarkers) trustMarkers.style.display = 'none';
-      
-      const highlightBox = document.querySelector('.highlight-box');
-      if (highlightBox) highlightBox.style.display = 'none';
-      
-      document.getElementById('mensaje').style.display = 'block';
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Hubo un problema. Intentá de nuevo.');
-      btn.disabled = false;
-      btn.innerText = '¡Quiero Acceder Ahora! 🚀';
-    });
-  };
 </script>
       
 </body>
