@@ -197,6 +197,7 @@
       </div>
       
 <form id="regForm">
+ <input type="hidden" id="origenPack" name="origenPack" value="curso_gratis">
   <input type="text" name="nombre" placeholder="Tu Nombre" required>
   <input type="email" name="email" placeholder="Tu mejor Email" required>
   <input type="hidden" name="apellido" value="-">
@@ -227,8 +228,9 @@
   <button type="submit" id="btnEnvio">¡Quiero Acceder Ahora! 🚀</button>
 </form>
 
-<script>
-  // Función para mostrar/ocultar el campo de texto extra
+
+      <script>
+  // 1. Función para mostrar/ocultar el campo de texto extra cuando eligen "Otro" país
   function toggleOtro() {
     const select = document.getElementById('paisSelect');
     const div = document.getElementById('otroPaisDiv');
@@ -243,34 +245,22 @@
       inputOtro.value = ''; // Limpia si cambia de opinión
     }
   }
-</script>
-      
-      <div class="trust-markers">
-        <div class="marker-item">
-          <i class="fas fa-bolt" style="color: #eab308;"></i>
-          <span><strong>Acceso Instantáneo:</strong> Recibís las lecciones directo en tu bandeja de entrada.</span>
-        </div>
-        <div class="marker-item">
-          <i class="fas fa-gift" style="color: #1e3c72;"></i>
-          <span><strong>Bono de regalo:</strong> Script funcional para enviar mensajes masivos por WhatsApp sin pagar plataformas externas.</span>
-        </div>
-        <div class="marker-item" style="color: #94a3b8; margin-top: 14px; justify-content: center; font-size: 12px;">
-          <i class="fas fa-shield-alt" style="margin-right: 5px;"></i>
-          <span>Tus datos están protegidos. Cero Spam.</span>
-        </div>
-      </div>
-      
-      <div id="mensaje">
-        🎉 ¡Excelente elección! Revisá tu bandeja de entrada ahora.<br>
-        <span style="font-weight: normal; font-size: 14px; color: #334155;">¡Inscripción confirmada!
 
-Te enviamos el acceso al curso y tus herramientas de regalo.
-(Si no lo ves, chequeá también la carpeta de Spam)..</span>
-      </div>
-    </div>
-  </div>
+  // 2. Detectar automáticamente si el usuario llega con un pack en la URL (ej: ?pack=pack1)
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const pack = urlParams.get('pack');
+    
+    if (pack) {
+      const inputOrigen = document.getElementById('origenPack');
+      if (inputOrigen) {
+        inputOrigen.value = pack;
+      }
+      console.log("Origen detectado - Pack: " + pack);
+    }
+  });
 
-  <script>
+  // 3. Lógica de envío del formulario
   const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
 
   document.getElementById('regForm').onsubmit = function(e) {
@@ -287,11 +277,16 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
       valorPais = document.getElementById('paisOtroInput').value;
     }
 
+    // Obtenemos el origen del pack (si vino por URL se cargó, sino toma 'curso_gratis')
+    const origenInput = document.getElementById('origenPack');
+    const valorOrigen = origenInput ? origenInput.value : 'curso_gratis';
+
     const datos = {
       nombre: this.nombre.value,
       apellido: this.apellido.value, 
       email: this.email.value,
-      pais: valorPais
+      pais: valorPais,
+      origenPack: valorOrigen
     };
 
     const queryString = new URLSearchParams(datos).toString();
@@ -306,8 +301,13 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
       }
       
       document.getElementById('regForm').style.display = 'none';
-      document.querySelector('.trust-markers').style.display = 'none';
-      document.querySelector('.highlight-box').style.display = 'none';
+      
+      const trustMarkers = document.querySelector('.trust-markers');
+      if (trustMarkers) trustMarkers.style.display = 'none';
+      
+      const highlightBox = document.querySelector('.highlight-box');
+      if (highlightBox) highlightBox.style.display = 'none';
+      
       document.getElementById('mensaje').style.display = 'block';
     })
     .catch(error => {
@@ -318,5 +318,6 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
     });
   };
 </script>
+      
 </body>
 </html>
