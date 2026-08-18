@@ -253,117 +253,81 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
     </div>
   </div>
 
-  <script>
-    // 1. Función para mostrar/ocultar el campo de texto extra cuando eligen "Otro" país
-    function toggleOtro() {
+ <script>
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
+    const API_PACKS_URL = "https://script.google.com/macros/s/AKfycbx3a8HNtkGuh2qpfnAnopeNFKgxm0Lv6_oUkwdve3iB3s5i4m6T8RkuJ3KM8_-CX-eGjA/exec";
+
+    function toggleOtro() { /* igual */
       const select = document.getElementById('paisSelect');
       const div = document.getElementById('otroPaisDiv');
       const inputOtro = document.getElementById('paisOtroInput');
-      
-      if (select.value === 'Otro') {
-        div.style.display = 'block';
-        inputOtro.required = true;
-      } else {
-        div.style.display = 'none';
-        inputOtro.required = false;
-        inputOtro.value = ''; 
-      }
+      if (select.value === 'Otro') { div.style.display = 'block'; inputOtro.required = true; }
+      else { div.style.display = 'none'; inputOtro.required = false; inputOtro.value = ''; }
     }
 
-    // 2. Detectar automáticamente si el usuario llega con un pack en la URL y cambiar textos
-    window.addEventListener('DOMContentLoaded', (event) => {
+    window.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const pack = urlParams.get('pack');
-      
+      let pack = urlParams.get("pack") || localStorage.getItem("pending_pack") || "";
+      // Normalizamos: "1" -> "pack1", "pack1" -> "pack1"
+      if(pack &&!pack.includes("pack")) pack = "pack" + pack.replace("pack","");
+
       if (pack) {
-        const inputOrigen = document.getElementById('origenPack');
-        if (inputOrigen) {
-          inputOrigen.value = pack;
-        }
-
+        document.getElementById('origenPack').value = pack;
+        const num = pack.replace("pack","");
         const infoPacks = {
-          'pack1': {
-            subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
-            tituloPrincipal: 'Desbloqueaste el Pack 1 Pro',
-            descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
-            cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
-          },
-          'pack2': {
-            subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
-            tituloPrincipal: 'Desbloqueaste el Pack 2 Avanzado',
-            descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
-            cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
-          },
-          'pack3': {
-            subtitulo: '¡Compra Exitosa en Lemon Squeezy! 🎉',
-            tituloPrincipal: 'Desbloqueaste el Pack Full Master',
-            descripcion: 'Completá tus datos para dar de alta tu cuenta, configurar tus accesos y activar todas las herramientas correspondientes a tu compra.',
-            cajaVerde: '¡Felicitaciones! Tu pago fue procesado con éxito. Registrate acá abajo para habilitar tu usuario en la plataforma de forma automática.'
-          }
+          'pack1': { tituloPrincipal: 'Desbloqueaste el Pack 1 Pro' },
+          'pack2': { tituloPrincipal: 'Desbloqueaste el Pack 2 Avanzado' },
+          'pack3': { tituloPrincipal: 'Desbloqueaste el Pack Full Master' }
         };
-
-        if (infoPacks[pack]) {
-          const datosPack = infoPacks[pack];
-          
-          document.querySelector('.card-left h2').innerHTML = `🚀 ¡ ${datosPack.tituloPrincipal} !`;
-          document.querySelector('.card-left p').innerText = datosPack.subtitulo;
-
-          document.querySelector('.card-right h3').innerText = datosPack.subtitulo;
-          document.querySelector('.card-right h2').innerText = datosPack.tituloPrincipal;
-          document.querySelector('.card-right p').innerHTML = datosPack.descripcion;
-          document.querySelector('.highlight-box').innerHTML = `<i class="fas fa-check-circle"></i> ${datosPack.cajaVerde}`;
+        if(infoPacks[pack]){
+          document.querySelector('.card-right h2').innerText = infoPacks[pack].tituloPrincipal;
+          document.querySelector('.highlight-box').innerHTML = `<i class="fas fa-check-circle"></i> ¡Felicitaciones! Tu pago fue procesado. Registrate para activar el Pack ${num} automáticamente.`;
         }
       }
     });
 
-    // 3. Manejar el envío del formulario mediante fetch sin recargar la página
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwdqWmXR9VC3e2jDD-7aWyb26T89BRMswxS7-ORH7vNnZKOHVPMus-yzwlwkctZcrlt/exec';
-
     document.getElementById('regForm').onsubmit = function(e) {
-      e.preventDefault(); // Evita que se recargue la página
-      
+      e.preventDefault();
       const btn = document.getElementById('btnEnvio');
       btn.disabled = true;
       btn.innerText = 'PROCESANDO TU ACCESO...';
 
       let valorPais = document.getElementById('paisSelect').value;
-      if (valorPais === 'Otro') {
-        valorPais = document.getElementById('paisOtroInput').value;
-      }
-
-      const origenInput = document.getElementById('origenPack');
-      const valorOrigen = origenInput ? origenInput.value : 'curso_gratis';
+      if (valorPais === 'Otro') valorPais = document.getElementById('paisOtroInput').value;
 
       const datos = {
         nombre: this.nombre.value,
-        apellido: this.apellido.value, 
+        apellido: this.apellido.value,
         email: this.email.value,
         pais: valorPais,
-        origenPack: valorOrigen
+        origenPack: document.getElementById('origenPack').value
       };
 
       const queryString = new URLSearchParams(datos).toString();
-      
-      fetch(`${WEB_APP_URL}?${queryString}`, {
-        method: 'GET',
-        mode: 'no-cors'
-      })
-      .then(() => {
-        if (typeof fbq !== 'undefined') {
-          fbq('track', 'Lead'); 
+
+      // 1. Creamos usuario (tu API vieja)
+      fetch(`${WEB_APP_URL}?${queryString}`, { method: 'GET', mode: 'no-cors' })
+     .then(() => {
+        // 2. AUTOMATICO: Si venia con pack, activamos los cursos
+        let packPendiente = datos.origenPack || localStorage.getItem("pending_pack") || new URLSearchParams(window.location.search).get("pack") || "";
+        if(packPendiente){
+          let numPack = packPendiente.toString().replace("pack",""); // "pack1" -> "1"
+          console.log("Activando pack", numPack, "para", datos.email);
+          fetch(API_PACKS_URL, {
+            method: "POST",
+            headers: {"Content-Type": "text/plain"},
+            body: JSON.stringify({email: datos.email, pack: numPack})
+          }).then(()=> localStorage.removeItem("pending_pack")).catch(()=>{});
         }
-        
+
+        if (typeof fbq!== 'undefined') fbq('track', 'Lead');
         document.getElementById('regForm').style.display = 'none';
-        
-        const trustMarkers = document.querySelector('.trust-markers');
-        if (trustMarkers) trustMarkers.style.display = 'none';
-        
-        const highlightBox = document.querySelector('.highlight-box');
-        if (highlightBox) highlightBox.style.display = 'none';
-        
+        document.querySelector('.trust-markers').style.display = 'none';
+        document.querySelector('.highlight-box').style.display = 'none';
         document.getElementById('mensaje').style.display = 'block';
+        document.getElementById('mensaje').innerHTML = "🎉 ¡Excelente! Tu cuenta fue creada y tu Pack activado automáticamente.<br><br><a href='https://hugo85ar.github.io/Plataforma-de-Cursos/' style='color:#1e3c72;font-weight:bold'>Ir a la plataforma</a>";
       })
-      .catch(error => {
+     .catch(error => {
         console.error('Error:', error);
         alert('Hubo un problema. Intentá de nuevo.');
         btn.disabled = false;
@@ -371,5 +335,6 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
       });
     };
   </script>
+  
 </body>
 </html>
