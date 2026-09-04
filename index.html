@@ -313,13 +313,12 @@ const API_PACKS_URL = 'https://script.google.com/macros/s/AKfycbzb7Sk5SbMJGfJpBE
         if(packPendiente){
           let numPack = packPendiente.toString().replace("pack",""); // "pack1" -> "1"
           console.log("Activando pack", numPack, "para", datos.email);
-          fetch(API_PACKS_URL, {
-            method: "POST",
-            headers: {"Content-Type": "text/plain"},
-            body: JSON.stringify({email: datos.email, pack: numPack})
-          }).then(()=> localStorage.removeItem("pending_pack")).catch(()=>{});
-        }
-
+        
+          fetch(API_PACKS_URL + '?email=' + encodeURIComponent(datos.email) + '&pack=' + encodeURIComponent(numPack) + '&origenPack=pack' + encodeURIComponent(numPack), {
+  method: 'GET',
+  mode: 'no-cors'
+}).then(()=> localStorage.removeItem("pending_pack")).catch(()=>{});
+          
         if (typeof fbq!== 'undefined') fbq('track', 'Lead');
         document.getElementById('regForm').style.display = 'none';
         document.querySelector('.trust-markers').style.display = 'none';
