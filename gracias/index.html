@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gracias - Acceso Creado</title>
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -9,14 +10,26 @@ fbq('init', '2189151328193841');
 fbq('track', 'PageView');
 fbq('track', 'Lead');
 </script>
-
-<style>body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;background:#f0fdf4;text-align:center}.box{background:white;padding:40px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.1)}</style>
+<style>
+body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;background:#f0fdf4;padding:20px}
+.box{background:white;padding:40px;border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,.08);max-width:520px;text-align:center}
+h1{margin:0 0 12px 0;font-size:28px;color:#0f172a}
+p{color:#475569;line-height:1.6;margin:8px 0}
+.btn{display:inline-block;margin-top:22px;background:#22c55e;color:white;padding:14px 26px;border-radius:12px;text-decoration:none;font-weight:800}
+.note{background:#f0fdf4;border-left:4px solid #22c55e;padding:12px 14px;border-radius:8px;margin-top:20px;text-align:left;font-size:13.5px;color:#166534}
+</style>
 </head>
 <body>
 <div class="box">
 <h1>🎉 ¡Excelente! Tu cuenta fue creada</h1>
-<p>Tu Pack fue activado automaticamente.<br>Te estamos redirigiendo a la plataforma...</p>
-<p><a href="https://hugo85ar.github.io/Plataforma-de-Cursos/">Ir a la plataforma ahora</a></p>
+<p>Tu Pack fue activado automáticamente.</p>
+<div class="note">
+<strong>📧 Revisá tu email ahora:</strong><br>
+Te acabamos de enviar las credenciales de acceso y el link directo a la plataforma.<br>
+Revisá también Spam / Promociones si no lo ves en bandeja de entrada.
+</div>
+<p style="margin-top:18px">Plataforma: <strong>hugo85ar.github.io/Plataforma-de-Cursos/</strong></p>
+<a class="btn" href="https://hugo85ar.github.io/Plataforma-de-Cursos/">Ir a la plataforma ahora 🚀</a>
 </div>
 </body>
 </html>
