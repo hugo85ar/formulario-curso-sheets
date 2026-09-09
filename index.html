@@ -315,13 +315,16 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
         }).then(()=> localStorage.removeItem("pending_pack")).catch(()=>{});
       } // <-- ESTA LLAVE ERA LA QUE TE FALTABA
 
-      if (typeof fbq!== 'undefined') fbq('track', 'Lead');
-      document.getElementById('regForm').style.display = 'none';
-      document.querySelector('.trust-markers').style.display = 'none';
-      document.querySelector('.highlight-box').style.display = 'none';
-      document.getElementById('mensaje').style.display = 'block';
-      document.getElementById('mensaje').innerHTML = "🎉 ¡Excelente! Tu cuenta fue creada y tu Pack activado automáticamente.<br><br><a href='https://hugo85ar.github.io/Plataforma-de-Cursos/' style='color:#1e3c72;font-weight:bold'>Ir a la plataforma</a>";
-    })
+     // ESTO TIENE QUE QUEDAR - BIEN
+if (typeof fbq!== 'undefined') {
+  fbq('track', 'Lead');
+  // Esperamos 400ms para que Meta registre el Lead antes de redirigir
+  setTimeout(() => {
+    window.location.href = 'https://hugo85ar.github.io/formulario-curso-sheets/gracias';
+  }, 400);
+} else {
+  window.location.href = 'https://hugo85ar.github.io/formulario-curso-sheets/gracias';
+}
    .catch(error => {
       console.error('Error:', error);
       alert('Hubo un problema. Intentá de nuevo.');
