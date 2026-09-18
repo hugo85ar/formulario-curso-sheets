@@ -303,34 +303,26 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
 
     const queryString = new URLSearchParams(datos).toString();
 
-    // 1. ENVIO POR POST - ya no expone email en la URL
-    fetch(WEB_APP_URL, { 
-      method: 'POST', 
+    fetch(WEB_APP_URL, {
+      method: 'POST',
       mode: 'no-cors',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: queryString
     })
-    .then(() => {
-      // 2. Activacion de Pack si existe
+   .then(() => {
       let packPendiente = datos.origenPack || localStorage.getItem("pending_pack") || new URLSearchParams(window.location.search).get("pack") || "";
-      if(packPendiente && packPendiente !== 'curso_gratis'){
+      if(packPendiente && packPendiente!== 'curso_gratis'){
         let numPack = packPendiente.toString().replace("pack","");
-        console.log("Activando pack", numPack, "para", datos.email);
         fetch(WEB_APP_URL + "?email=" + encodeURIComponent(datos.email) + "&pack=" + encodeURIComponent(numPack), {
           method: 'GET',
           mode: 'no-cors'
         }).then(()=> localStorage.removeItem("pending_pack")).catch(()=>{});
       }
 
-      // 3. Pixel Lead + Redirect a /gracias (con 600ms para que Meta lo registre)
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'Lead');
-      }
-      setTimeout(() => {
-        window.location.href = 'https://hugo85ar.github.io/formulario-curso-sheets/gracias';
-      }, 600);
+      // CORREGIDO: Ya no disparamos Lead acá. El Lead se dispara solo en /gracias
+      window.location.href = 'https://hugo85ar.github.io/formulario-curso-sheets/gracias';
     })
-    .catch(error => {
+   .catch(error => {
       console.error('Error:', error);
       alert('Hubo un problema. Intentá de nuevo.');
       btn.disabled = false;
