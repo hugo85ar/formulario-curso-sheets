@@ -284,7 +284,7 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
     }
   });
 
- document.getElementById('regForm').onsubmit = function(e) {
+document.getElementById('regForm').onsubmit = function(e) {
     e.preventDefault();
     const btn = document.getElementById('btnEnvio');
     btn.disabled = true;
@@ -310,6 +310,9 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
       body: queryString
     })
    .then(() => {
+      // FIX 4 DÍAS: El Lead se dispara ACÁ, solo si el POST salió
+      fbq('track', 'Lead');
+
       let packPendiente = datos.origenPack || localStorage.getItem("pending_pack") || new URLSearchParams(window.location.search).get("pack") || "";
       if(packPendiente && packPendiente!== 'curso_gratis'){
         let numPack = packPendiente.toString().replace("pack","");
@@ -319,7 +322,6 @@ Te enviamos el acceso al curso y tus herramientas de regalo.
         }).then(()=> localStorage.removeItem("pending_pack")).catch(()=>{});
       }
 
-      // CORREGIDO: Ya no disparamos Lead acá. El Lead se dispara solo en /gracias
       window.location.href = 'https://hugo85ar.github.io/formulario-curso-sheets/gracias';
     })
    .catch(error => {
